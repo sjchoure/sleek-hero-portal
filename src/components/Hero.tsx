@@ -163,7 +163,29 @@ const Hero = () => {
               src="https://drive.google.com/file/d/10tydhnleEUyOmAyIY1Z1N6QonnCGdezf/preview" 
               className="absolute inset-0 w-full h-full"
               allow="autoplay"
+              style={{ pointerEvents: "none" }}
+              frameBorder="0"
             ></iframe>
+            {/* Add a script to automatically play the video and hide controls */}
+            <div 
+              dangerouslySetInnerHTML={{ 
+                __html: `
+                  <script>
+                    window.onload = function() {
+                      const iframe = document.querySelector('iframe');
+                      if (iframe && iframe.contentWindow) {
+                        // Try to find and autoplay the video within the iframe
+                        const message = JSON.stringify({
+                          event: 'command',
+                          func: 'playVideo'
+                        });
+                        iframe.contentWindow.postMessage(message, '*');
+                      }
+                    }
+                  </script>
+                `
+              }}
+            />
           </motion.div>
         </div>
       </motion.div>
