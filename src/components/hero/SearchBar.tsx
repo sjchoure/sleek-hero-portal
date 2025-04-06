@@ -59,11 +59,12 @@ const SearchBar = ({
   };
 
   const toggleFavorite = (eventId: number) => {
-    setFavorites(prev => 
-      prev.includes(eventId) 
-        ? prev.filter(id => id !== eventId)
-        : [...prev, eventId]
-    );
+    // Fix: Create a new array directly instead of using a callback function
+    const newFavorites = favorites.includes(eventId)
+      ? favorites.filter(id => id !== eventId)
+      : [...favorites, eventId];
+    
+    setFavorites(newFavorites);
   };
 
   return (
